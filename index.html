@@ -71,12 +71,12 @@
     </div>
 
     <div class="bg-white p-6 rounded-lg shadow mb-8">
-        <h2 class="text-xl font-bold mb-4">Stress During Congestion (Wiesenthal et al., 2003)</h2>
-        <p class="text-gray-600 mb-4">Stress scores during simulated congestion with and without music</p>
+        <h2 class="text-xl font-bold mb-4">Influence of Music on Driver Stress (Wiesenthal et al., 2000)</h2>
+        <p class="text-gray-600 mb-4">Mean state stress scores in Low vs. High Congestion (Actual Highway Driving)</p>
         <div class="h-80">
             <canvas id="stressChart"></canvas>
         </div>
-        <p class="text-sm text-gray-500 mt-4"><em>Note:</em> Music listeners showed 24% lower peak stress (3.90 vs 5.13) (Wiesenthal et al., 2003).</p>
+        <p class="text-sm text-gray-500 mt-4"><em>Note:</em> Drivers without music showed a sharp increase in stress during high congestion (Score ~49), whereas music listeners maintained lower stress levels (Score ~38). Scale 0-100.</p>
     </div>
 
     <div class="bg-white p-6 rounded-lg shadow mb-8">
@@ -93,7 +93,7 @@
         <div class="space-y-4">
             <p class="text-sm">Hyman, I. E., Boss, S. M., Wise, B. M., McKenzie, K. E., & Caggiano, J. M. (2010). Did you see the unicycling clown? Inattentional blindness while walking and talking on a cell phone. <em>Applied Cognitive Psychology</em>, <em>24</em>(5), 597-607.</p>
             <p class="text-sm">Krause, A. E., Glasser, S., & Osborne, M. S. (2021). Augmenting function with value: An exploration of reasons to engage and disengage from music listening. <em>Music & Science</em>, <em>4</em>, 1-13.</p>
-            <p class="text-sm">Wiesenthal, D. L., Hennessy, D. A., & Totten, B. (2003). The influence of music on driver stress. <em>Journal of Applied Social Psychology</em>, <em>33</em>(2), 308-329.</p>
+            <p class="text-sm">Wiesenthal, D. L., Hennessy, D. A., & Totten, B. (2000). The influence of music on driver stress. <em>Journal of Applied Social Psychology</em>, <em>30</em>(8), 1709-1719.</p>
         </div>
     </div>
 
@@ -130,34 +130,45 @@
         }
     });
 
-    // Chart 2: Wiesenthal et al. (2003)
+    // Chart 2: Wiesenthal et al. (2000) - UPDATED CONFIGURATION
     new Chart(document.getElementById('stressChart'), {
         type: 'line',
         data: {
-            labels: ['Baseline', '15 min', '30 min', '45 min', '60 min'],
+            labels: ['Low Congestion', 'High Congestion'],
             datasets: [
                 {
-                    label: 'No Music (Peak: 5.13)',
-                    data: [2.0, 3.8, 5.0, 5.13, 4.8],
-                    borderColor: '#f43f5e',
+                    label: 'No Music',
+                    data: [32, 49],
+                    borderColor: '#f43f5e', // Red/Pink
                     backgroundColor: 'rgba(244, 63, 94, 0.1)',
                     fill: true,
-                    tension: 0.4
+                    tension: 0.1,
+                    pointRadius: 6,
+                    borderWidth: 3
                 },
                 {
-                    label: 'With Music (Peak: 3.90)',
-                    data: [2.0, 2.4, 3.1, 3.90, 3.5],
-                    borderColor: '#6366f1',
+                    label: 'Music',
+                    data: [36, 38],
+                    borderColor: '#6366f1', // Indigo/Blue
                     backgroundColor: 'rgba(99, 102, 241, 0.1)',
                     fill: true,
-                    tension: 0.4
+                    tension: 0.1,
+                    pointRadius: 6,
+                    pointStyle: 'rectRot',
+                    borderWidth: 3
                 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, max: 7 } }
+            scales: { 
+                y: { 
+                    beginAtZero: true, 
+                    max: 60, // Capped at 60 for better visibility (scale is technically 100)
+                    title: { display: true, text: 'Stress Score (0-100)' }
+                } 
+            }
         }
     });
 
